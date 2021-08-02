@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 
 from db.base_class import Base
 
-
 class Job(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(30), nullable=False)
