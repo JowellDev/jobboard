@@ -15,7 +15,7 @@ class Settings:
     DB_USER: str = os.getenv('DB_USER')
     DB_PASSWORD: str = os.getenv('DB_PASSWORD')
 
-    DB_URL= f"${DB_CONNECTION}://${DB_USER}:${DB_PASSWORD}@{DB_HOST}:${DB_PORT}/${DB_NAME}"
+    DB_URL= f"{DB_CONNECTION}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 
 settings = Settings()
