@@ -3,4 +3,5 @@ sqlalchemy
 mysqlclient
 passlib[bcrypt]
 pytest
+pydantic[email]
 
