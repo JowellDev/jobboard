@@ -7,5 +7,5 @@ def test_create_user(client):
         "password": "123456"
     }
 
-    response = client.post("/users", json.dump(data))
+    response = client.post("/users", json.dumps(data))
     assert response.status_code == 200
