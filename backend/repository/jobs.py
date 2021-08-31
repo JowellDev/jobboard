@@ -21,3 +21,7 @@ def create_new_job(job: JobSchema, db: Session, owner_id: int):
     db.refresh(new_job)
 
     return new_job
+
+def find_job_by_id(id: int, db: Session):
+    job = db.query(Job).filter(Job.id == id).first()
+    return job
