@@ -12,5 +12,7 @@ class JobSchema(BaseModel):
 
 class ShowJob(JobSchema):
     date_posted: date
+    owner_id: int
+    is_active: bool
     class Config():
         orm_mode = True

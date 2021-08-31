@@ -24,4 +24,3 @@ def test_show_job(client):
     client.post('/jobs/', json.dumps(data))
     response = client.get('/jobs/1')
     assert response.status_code == 200
-    assert response.title == "t"
