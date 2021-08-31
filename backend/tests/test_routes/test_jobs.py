@@ -7,7 +7,7 @@ def test_create_job(client):
         "company": "c",
         "company_url": "cu",
         "location": "l",
-        "description": "d"
+        "description": "d",
     }
 
     response = client.post('/jobs/', json.dumps(data))

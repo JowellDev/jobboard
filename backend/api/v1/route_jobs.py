@@ -7,6 +7,7 @@ from repository.jobs import create_new_job
 router = APIRouter()
 
 @router.post('/', response_model=ShowJob)
-def create_job(job: JobSchema, owner_id: int, db: Session = Depends(get_db)):
+def create_job(job: JobSchema, db: Session = Depends(get_db)):
+    owner_id = 1
     job = create_new_job(job, db, owner_id)
     return job
