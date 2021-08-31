@@ -18,7 +18,7 @@ def show_job(id: int, db: Session = Depends(get_db)):
     job = find_job_by_id(id, db)
     if not job:
         raise HTTPException(
-            detail="no job found !", 
+            detail= f"Job with index {id} not exist", 
             status_code=status.HTTP_404_NOT_FOUND
         )
     
