@@ -3,14 +3,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db.session import get_db
 from schemas.jobs import ShowJob, JobSchema
-from repository.jobs import create_new_job, find_job_by_id, get_all_jobs
+from repository.jobs import create_new_job, find_job_by_id, get_all_jobs, update_a_job
 
 router = APIRouter()
 
 @router.post('/', response_model=ShowJob)
 def create_job(job: JobSchema, db: Session = Depends(get_db)):
-    owner_id = 1
-    job = create_new_job(job, db, owner_id)
+    job = create_new_job(job, db)
     return job
 
 
@@ -32,3 +31,19 @@ def show_job(id: int, db: Session = Depends(get_db)):
         )
     
     return job
+
+@router.put('/{id}')
+def update_job(id: int, job: JobSchema, db: Session = Depends(get_db)):
+    
+    job_found = find_job_by_id(id, db)
+    if not job_found:
+        raise HTTPException(
+            status_code=404,
+            detail="not found"
+        )
+    
+    update_a_job(job_found, job, db)
+    return {
+        "status": status.HTTP_200_OK,
+        "msg": "job updated with success"
+    }
