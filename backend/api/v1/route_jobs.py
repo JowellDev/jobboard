@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db.session import get_db
 from schemas.jobs import ShowJob, JobSchema
-from repository.jobs import create_new_job, find_job_by_id, get_all_jobs, update_a_job
+from repository.jobs import create_new_job, find_job_by_id, get_all_jobs, update_a_job, delete_a_job
 
 router = APIRouter()
 
@@ -46,4 +46,20 @@ def update_job(id: int, job: JobSchema, db: Session = Depends(get_db)):
     return {
         "status": status.HTTP_200_OK,
         "msg": "job updated with success"
+    }
+
+@router.delete('/{id}')
+def delete_job(id: int, db: Session = Depends(get_db)):
+    job_found = find_job_by_id(id, db)
+
+    if not job_found:
+        raise HTTPException(
+            detail= f"Job with index {id} not exist", 
+            status_code=status.HTTP_404_NOT_FOUND
+        )
+
+    delete_a_job(job_found, db)
+    return {
+        "msg": "job deleted with success",
+        "status": status.HTTP_200_OK,
     }

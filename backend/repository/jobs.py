@@ -23,6 +23,7 @@ def find_job_by_id(id: int, db: Session):
     job = db.query(Job).filter(Job.id == id).first()
     return job
 
+
 def get_all_jobs(db: Session) -> List:
     jobs = db.query(Job).filter(Job.is_active == True).all()
     return jobs
@@ -39,3 +40,7 @@ def update_a_job(job_to_update: Job, new_job: JobSchema, db: Session):
     db.add(job_to_update)
     db.commit()
     db.refresh(job_to_update)
+
+def delete_a_job(job, db: Session):
+    db.delete(job)
+    db.commit()
