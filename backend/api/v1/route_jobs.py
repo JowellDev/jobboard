@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from db.session import get_db
 from schemas.jobs import ShowJob, JobSchema
 from repository.jobs import create_new_job, find_job_by_id, get_all_jobs, update_a_job, delete_a_job
-from api.v1.utils import raise_exception
 
 router = APIRouter()
 
@@ -27,9 +26,9 @@ def get_jobs(db: Session = Depends(get_db)):
 def show_job(id: int, db: Session = Depends(get_db)):
     job = find_job_by_id(id, db)
     if not job:
-        raise_exception(
-            status= status.HTTP_404_NOT_FOUND,
-            message= f"Job with index {id} not exist"
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Job with index {id} not exist"
         )
     
     return job
@@ -41,9 +40,9 @@ def update_job(id: int, job: JobSchema, db: Session = Depends(get_db)):
 
     job_found = find_job_by_id(id, db)
     if not job_found:
-        raise_exception(
-            status= status.HTTP_404_NOT_FOUND,
-            message= f"Job with index {id} not exist"
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Job with index {id} not exist"
         )
     
     update_a_job(job_found, job, db)
@@ -57,9 +56,9 @@ def delete_job(id: int, db: Session = Depends(get_db)):
     job_found = find_job_by_id(id, db)
 
     if not job_found:
-        raise_exception(
-            status= status.HTTP_404_NOT_FOUND,
-            message= f"Job with index {id} not exist"
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Job with index {id} not exist"
         )
 
     delete_a_job(job_found, db)
