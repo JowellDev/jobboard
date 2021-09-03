@@ -17,5 +17,9 @@ class Settings:
 
     DB_URL= f"{DB_CONNECTION}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    JWT_ALGORITHM: str = "HS256"
+    JWT_SECRET_KEY: str = os.getenv('JWT_SECRET_KEY')
+
 
 settings = Settings()
