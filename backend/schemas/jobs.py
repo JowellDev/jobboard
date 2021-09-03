@@ -8,11 +8,11 @@ class JobSchema(BaseModel):
     company_url: Optional[str] = None
     location: Optional[str] = None
     description: Optional[str] = None
-    owner_id: int
 
 
 class ShowJob(JobSchema):
     date_posted: date
     is_active: bool
+    owner_id: int
     class Config():
         orm_mode = True

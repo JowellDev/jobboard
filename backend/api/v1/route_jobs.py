@@ -10,7 +10,8 @@ router = APIRouter()
 
 @router.post('/', response_model=ShowJob)
 def create_job(job: JobSchema, db: Session = Depends(get_db)):
-    job = create_new_job(job, db)
+    owner_id = 1
+    job = create_new_job(job, owner_id, db)
     return job
 
 
@@ -36,6 +37,8 @@ def show_job(id: int, db: Session = Depends(get_db)):
 @router.put('/{id}')
 def update_job(id: int, job: JobSchema, db: Session = Depends(get_db)):
     
+    owner_id = 1
+
     job_found = find_job_by_id(id, db)
     if not job_found:
         raise_exception(
