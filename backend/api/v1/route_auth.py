@@ -9,6 +9,7 @@ from schemas.token import Token
 
 router = APIRouter()
 
+
 @router.post('/token', response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
