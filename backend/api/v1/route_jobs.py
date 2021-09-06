@@ -9,7 +9,7 @@ from models.users import User
 
 router = APIRouter()
 
-@router.post('/', response_model=ShowJob)
+@router.post('/create', response_model=ShowJob)
 def create_job(job: JobSchema, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     job = create_new_job(job=job, owner_id=current_user.id, db=db)
     return job
@@ -23,7 +23,7 @@ def get_jobs(db: Session = Depends(get_db)):
     return jobs
 
 
-@router.get('/{id}', response_model=ShowJob)
+@router.get('/show/{id}', response_model=ShowJob)
 def show_job(id: int, db: Session = Depends(get_db)):
     job = find_job_by_id(id, db)
     if not job:
@@ -34,7 +34,7 @@ def show_job(id: int, db: Session = Depends(get_db)):
     
     return job
 
-@router.put('/{id}')
+@router.put('/update/{id}')
 def update_job(id: int, job: JobSchema, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
 
     job_found = find_job_by_id(id, db)
@@ -56,7 +56,7 @@ def update_job(id: int, job: JobSchema, db: Session = Depends(get_db), current_u
         "msg": "job updated with success"
     }
 
-@router.delete('/{id}')
+@router.delete('/delete{id}')
 def delete_job(id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     job_found = find_job_by_id(id, db)
 
